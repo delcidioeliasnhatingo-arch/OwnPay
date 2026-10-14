@@ -5,7 +5,8 @@ RUN apt-get update \
     && docker-php-ext-install bcmath curl mbstring pdo_mysql \
     && rm -f /etc/apache2/mods-enabled/mpm_*.load /etc/apache2/mods-enabled/mpm_*.conf \
     && a2enmod mpm_prefork rewrite headers \
-    && rm -rf /var/lib/apt/lists/*
+    && ls -l /etc/apache2/mods-enabled/mpm* \
+    && grep -R 'LoadModule mpm_' /etc/apache2
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
